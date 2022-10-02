@@ -1,9 +1,7 @@
 <?php
 session_start();
 include('../db/config.php');
-// var_dump($_POST);
 if (isset($_POST['action'])) {
-    // var_dump("test");
     $username = $_POST['username'];
     $password = $_POST['password'];
 
