@@ -5,7 +5,7 @@ $last_name = $_POST["last_name"];
 $address = $_POST["address"];
 $country = $_POST["country"];
 $username = $_SESSION['username'];
-// var_dump($_POST);
+
 
 try {
 $stmt = $conn->prepare("UPDATE user SET first_name = :first_name , last_name = :last_name, 
@@ -15,9 +15,6 @@ address = :address, country= :country where username = :username");
     $stmt->bindParam(':address', $address);
     $stmt->bindParam(':country', $country);
     $stmt->bindParam(':username', $username);
-
-// insert a row
-    // var_dump($stmt);
     $stmt->execute();
 
     echo "Contact data saved successfully";
@@ -38,7 +35,6 @@ try {
             ];
 
     }
-    // var_dump($data);
     $sql = "INSERT INTO phone_number(username, phone_number, published) 
     VALUES (:username,:phone_number,:published)";
     $stmt = $conn->prepare($sql);
@@ -69,7 +65,6 @@ try {
             ];
 
     }
-    // var_dump($data);
     $sql = "INSERT INTO email(username, email_address, published) 
     VALUES (:username,:email_address,:published)";
     $stmt = $conn->prepare($sql);

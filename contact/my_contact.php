@@ -18,7 +18,6 @@ include('../db/config.php');
    
    $stmt2 = $conn->prepare("SELECT * FROM email WHERE username=?");
    $stmt2->execute([$_SESSION['username']]); 
-//    var_dump($user);
     ?>
     <div class="row">
         <div class="col-md-4">
