@@ -1,29 +1,49 @@
 <?php
 session_start();
 include('../db/config.php');
+
+$stmt = $conn->prepare("SELECT * FROM user WHERE username=?");
+$stmt->execute([$_SESSION['username']]); 
+$user = $stmt->fetch();
+
+$stmt1 = $conn->prepare("SELECT * FROM phone_number WHERE username=?");
+$stmt1->execute([$_SESSION['username']]); 
+
+$stmt2 = $conn->prepare("SELECT * FROM email WHERE username=?");
+$stmt2->execute([$_SESSION['username']]); 
+
 ?>
 <div class="row">
-<div class="col-md-12">
+<div class="row">
+<div class="col-md-8">
 <div class="flash_data"></div>
 </div>
+<div class="col-md-4 float-end">
+
+
+</div>
+</div>
+<?php var_dump($user['published']); ?>
 <div class="col-md-12">
 <form id="contact">
-    <?php 
-   $stmt = $conn->prepare("SELECT * FROM user WHERE username=?");
-   $stmt->execute([$_SESSION['username']]); 
-   $user = $stmt->fetch();
-
-   $stmt1 = $conn->prepare("SELECT * FROM phone_number WHERE username=?");
-   $stmt1->execute([$_SESSION['username']]); 
+    <div class="row">
+    <div class="form-check">
+  <label class="form-check-label" for="publish_contact">
+    Publish my contacts
+  </label>
+  <input class="form-check-input" type="checkbox" 
+  <?= $user['published'] == true ?  'checked' : ''; ?>
+  name="publish_contact" value="yes" id="publish_contact">
+</div>
+    </div>
    
-   $stmt2 = $conn->prepare("SELECT * FROM email WHERE username=?");
-   $stmt2->execute([$_SESSION['username']]); 
-    ?>
+
     <div class="row">
         <div class="col-md-4">
             <div class="title">
                 <h4>Contact</h4>
             </div>
+        
             <div class="row mb-3">
                 <label for="inputFirstName" class="col-sm-3 col-form-label">First name</label>
                 <div class="col-sm-9">

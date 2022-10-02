@@ -1,7 +1,6 @@
 <?php
 session_start();
 include('db/config.php');
-var_dump($_SESSION);
 ?>
 <body class="bg-light">
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">

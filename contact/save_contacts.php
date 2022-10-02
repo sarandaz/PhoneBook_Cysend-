@@ -6,6 +6,16 @@ $address = $_POST["address"];
 $country = $_POST["country"];
 $username = $_SESSION['username'];
 
+$publish_contact = isset($_POST['publish_contact']) ? true : false;
+try {
+    $stmt = $conn->prepare("UPDATE user SET published = :published where username = :username");
+    $stmt->bindParam(':published', $publish_contact);
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    echo "published finished";
+} catch(PDOException $e) {
+    $urlError =  $e->getMessage();
+}
 
 try {
 $stmt = $conn->prepare("UPDATE user SET first_name = :first_name , last_name = :last_name, 
