@@ -1,45 +1,58 @@
 <?php
 include('../db/config.php');
 
-$stmt = $conn->query("SELECT * FROM user where published = true");
+
+$stmt = $conn->query("SELECT * FROM user join countries on countries.id = user.country
+                        where published = true");
+
+// $stmt1 = $conn->query("SELECT * from phone_number where username=?");
+
+
 ?>
+
+
 <div class="row">
-<div class="public_data float-start">
-    <?php
-    while ($row = $stmt->fetch()) {
-        echo $row['first_name'] . " " . $row['last_name'];
+    <div class="public_data float-start">
+        <?php
+        while ($row = $stmt->fetch()) {
+            $username = $row['username'];
+            $counter = 1;
+        ?>
 
-    ?>
+            <div class="">
+                
+                <div class="row">
+                    <div class="col-md-4"><?= $counter  ?> . <?= $row['first_name']  . " " . $row['last_name']  ?></div><a class="col-md-4" href="#" onclick="showDetails(<?= $row['id'] ?>)">Show details</a>
+                </div>
+                <div class="py-3 px-3" id="<?= $row['id'] ?>" style="display:none;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6> Address: </h6>
+                        <div class="d-flex justify-content-start"><?= $row['address'] ?></div>
+                        <div class="d-flex justify-content-start"><?= isset($row['zip_city']) ? $row['zip_city'] : "" ?></div>
+                        <div class="d-flex justify-content-start"><?= $row['name'] ?></div>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Phone numbers</h6>
         
-        <div id="<?= $row['id'] ?>" class="col-md-12">
-
-            <!-- <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">First name</label>
-                <p></p>
-            </div>
-            <div class="row mb-3">
-                <label for="inputLastName" class="col-sm-3 col-form-label">Last Name</label>
-                <div class="col-sm-9">
-                    <input type="text" name="last_name" value="<?php echo isset($user['last_name']) ? $user['last_name'] : ''  ?>" class="form-control" id="inputLastName">
+                            <div class="d-flex justify-content-start"><?= "" ?></div>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Emails</h6>
+                    </div>
+                    </div>
                 </div>
             </div>
-            <div class="row mb-3">
-                <label for="inputAddress" class="col-sm-3 col-form-label">Address</label>
-                <div class="col-sm-9">
-                    <input type="text" name="address" value="<?php echo isset($user['address']) ? $user['address'] : ''  ?>" class="form-control" id="inputAddress">
-                </div>
-            </div> -->
 
-            <?php
-             echo '<div class="row mb-3"><label class=" col-form-label">First name</label><span>'. $row['first_name'] .'</span></div>';
-             echo '<div class="row mb-3"><label class="col-form-label">Last name</label><span>'. $row['last_name'] .'</span></div>';
-             echo '<div class="row mb-3"><label class=" col-form-label">Address</label><span>'. $row['address'] .'</span></div>';
-             echo '<div class="row mb-3"><label class=" col-form-label">Zip City</label><span>'. '' .'</span></div>';
-             echo '<div class="row mb-3"><label class=" col-form-label">Country</label><span>'. $row['country'] .'</span></div>';
-
-            ?>
-       
-        </div>
-    <?php } ?>
+    </div>
+        <?php 
+            $counter++;
+        } 
+        ?>
 </div>
 </div>
+<script>
+    function showDetails(id) {
+        $("#" + id).toggle();
+    }
+</script>

@@ -33,7 +33,7 @@ include('db/config.php');
             </div>
 
             <div class="row">
-                <div class="content px-5 py-5 d-flex justify-content-center"></div>
+                <div class="content px-5 py-5 container"></div>
             </div>
 
         </main>
