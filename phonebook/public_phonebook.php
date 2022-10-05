@@ -3,10 +3,23 @@ include('../db/config.php');
 
 
 $stmt = $conn->query("SELECT * FROM user join countries on countries.id = user.country
-                        where published = true");
+                        where published = true")->fetchAll();
 
-// $stmt1 = $conn->query("SELECT * from phone_number where username=?");
+$stmt1 = $conn->query("SELECT * from phone_number")->fetchAll();
+$data = [];
 
+// TODO: Get emails and append to data array
+
+foreach($stmt as $row) {
+    foreach($stmt1 as $phone_number) {
+        if($row['username'] == $phone_number['username']){
+            $row['phone_number'][] = $phone_number;
+            
+        }
+        
+    }
+    $data[] = $row;
+}
 
 ?>
 
@@ -14,8 +27,7 @@ $stmt = $conn->query("SELECT * FROM user join countries on countries.id = user.c
 <div class="row">
     <div class="public_data float-start">
         <?php
-        while ($row = $stmt->fetch()) {
-            $username = $row['username'];
+        foreach($data as $row) { 
             $counter = 1;
         ?>
 
@@ -34,11 +46,13 @@ $stmt = $conn->query("SELECT * FROM user join countries on countries.id = user.c
                     </div>
                     <div class="col-md-4">
                         <h6>Phone numbers</h6>
-        
-                            <div class="d-flex justify-content-start"><?= "" ?></div>
+                         <?php foreach ($row['phone_number'] as $phone ){ ?>
+                            <div class="d-flex justify-content-start"><?= $phone['phone_number'] ?></div>
+                            <?php } ?>
                     </div>
                     <div class="col-md-4">
                         <h6>Emails</h6>
+                        <!-- TODO: Loop through emails -->
                     </div>
                     </div>
                 </div>

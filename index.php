@@ -17,7 +17,7 @@ include('db/config.php');
                 <div class="d-grid gap-2 d-md-block">
                     <?php 
                         if(isset($_SESSION['username'])) {
-                            echo '<button onclick="logout(this)" type="button" class="btn btn-secondary">Logout</button>';                      
+                            echo '<button onclick="logOut()" type="button" class="btn btn-secondary">Logout</button>';                      
                         } else {
                             echo '<button onclick="showLoginPage(this)" type="button" class="btn btn-secondary">Login</button>';  
                         }
@@ -64,6 +64,12 @@ include('db/config.php');
                 $(".content").html(data);
             });
         }
-        $(document).ready(function() {});
+        function logOut() {
+            $.post("authentication/logout.php", {"can_logout" : true}, function(data){
+                if(data.can_logout) {
+                    location.reload()
+                }
+            }, "json");
+        }
     </script>
 </body>
