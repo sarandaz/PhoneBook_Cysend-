@@ -48,3 +48,8 @@ table -> emails
         UserID -> int
         email -> varchar(255)
         published -> boolean
+
+
+TODO: 
+Create a checkbox in my contact give value yes, name = user_published 
+save_contacts => query = "update user table set publish = true where username = session['username] "

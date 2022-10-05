@@ -2,6 +2,7 @@
 session_start();
 include('db/config.php');
 ?>
+
 <body class="bg-light">
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -15,19 +16,19 @@ include('db/config.php');
             </div>
             <div class="row">
                 <div class="d-grid gap-2 d-md-block">
-                    <?php 
-                        if(isset($_SESSION['username'])) {
-                            echo '<button onclick="logOut()" type="button" class="btn btn-secondary">Logout</button>';                      
-                        } else {
-                            echo '<button onclick="showLoginPage(this)" type="button" class="btn btn-secondary">Login</button>';  
-                        }
+                    <?php
+                    if (isset($_SESSION['username'])) {
+                        echo '<button onclick="logOut()" type="button" class="btn btn-secondary">Logout</button>';
+                    } else {
+                        echo '<button onclick="showLoginPage(this)" type="button" class="btn btn-secondary">Login</button>';
+                    }
                     ?>
-                    
+
                     <button onclick="showPublicPhonePage(this)" type="button" class="btn btn-secondary">Public Phonebook</button>
-                    <?php 
-                        if(isset($_SESSION['username'])) {
-                            echo '<button onclick="showMyContactPage(this)" type="button" class="btn btn-secondary">My Contact</button>';  
-                        }
+                    <?php
+                    if (isset($_SESSION['username'])) {
+                        echo '<button onclick="showMyContactPage(this)" type="button" class="btn btn-secondary">My Contact</button>';
+                    }
                     ?>
                 </div>
             </div>
@@ -64,9 +65,12 @@ include('db/config.php');
                 $(".content").html(data);
             });
         }
+
         function logOut() {
-            $.post("authentication/logout.php", {"can_logout" : true}, function(data){
-                if(data.can_logout) {
+            $.post("authentication/logout.php", {
+                "can_logout": true
+            }, function(data) {
+                if (data.can_logout) {
                     location.reload()
                 }
             }, "json");

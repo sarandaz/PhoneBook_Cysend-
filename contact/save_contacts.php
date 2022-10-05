@@ -1,4 +1,4 @@
-<?php 
+<?php
 include('../db/config.php');
 $first_name = $_POST["first_name"];
 $last_name = $_POST["last_name"];
@@ -13,12 +13,12 @@ try {
     $stmt->bindParam(':username', $username);
     $stmt->execute();
     echo "published finished";
-} catch(PDOException $e) {
+} catch (PDOException $e) {
     $urlError =  $e->getMessage();
 }
 
 try {
-$stmt = $conn->prepare("UPDATE user SET first_name = :first_name , last_name = :last_name, 
+    $stmt = $conn->prepare("UPDATE user SET first_name = :first_name , last_name = :last_name, 
 address = :address, country= :country where username = :username");
     $stmt->bindParam(':first_name', $first_name);
     $stmt->bindParam(':last_name', $last_name);
@@ -28,8 +28,7 @@ address = :address, country= :country where username = :username");
     $stmt->execute();
 
     echo "Contact data saved successfully";
-}  catch(PDOException $e)
-{
+} catch (PDOException $e) {
     $urlError =  $e->getMessage();
 }
 
@@ -43,23 +42,21 @@ try {
                 'phone_number' => $phone[0],
                 'published' => $published
             ];
-
     }
     $sql = "INSERT INTO phone_number(username, phone_number, published) 
     VALUES (:username,:phone_number,:published)";
     $stmt = $conn->prepare($sql);
     try {
 
-        foreach ($data as $row)
-        {   
+        foreach ($data as $row) {
             $stmt->execute($row);
         }
         echo "Phone numbers saved successfully";
-    }catch (Exception $e){
+    } catch (Exception $e) {
         $conn->rollback();
         throw $e;
     }
-} catch(PDOException $e) {
+} catch (PDOException $e) {
     $urlError =  $e->getMessage();
 }
 
@@ -73,22 +70,20 @@ try {
                 'email_address' => $email[0],
                 'published' => $published
             ];
-
     }
     $sql = "INSERT INTO email(username, email_address, published) 
     VALUES (:username,:email_address,:published)";
     $stmt = $conn->prepare($sql);
     try {
 
-        foreach ($data as $row)
-        {   
+        foreach ($data as $row) {
             $stmt->execute($row);
         }
         echo "Emails saved successfully";
-    }catch (Exception $e){
+    } catch (Exception $e) {
         $conn->rollback();
         throw $e;
     }
-} catch(PDOException $e) {
+} catch (PDOException $e) {
     $urlError =  $e->getMessage();
 }
